@@ -7,7 +7,7 @@ import mdx from '@astrojs/mdx'
 
 // https://astro.build/config
 export default defineConfig({
-    site: 'https://kiweelog.netlify.app/',
+    site: 'https://kiweelog.vercel.app/',
     vite: {
         plugins: [tailwindcss()],
     },
