@@ -1,11 +1,20 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro'
-import Greeting from '../components/Greeting'
+// import fly from '../assets/fly.png'
+// import kiwi from '../assets/kiwi.png'
+// import bird from '../assets/bird.jpg'
+// import paint from '../assets/paint.png'
+// import { Image } from 'astro:assets'
+import Sticker from '../components/Sticker'
 
 const pageTitle = 'Home Page'
 ---
 
 <BaseLayout pageTitle={pageTitle}>
     <h2>My awesome blog subtitle</h2>
-    <Greeting client:load messages={['Hej', 'Hallo', 'Hola', 'Habari']} />
+    <Sticker client:only="react" />
+    <!-- <Image src={fly} alt="fruits-fly" width="500" />
+    <Image src={kiwi} alt="kiwi" />
+    <Image src={bird} alt="bird" />
+    <Image src={paint} alt="paint" /> -->
 </BaseLayout>
