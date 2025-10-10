@@ -1,0 +1,27 @@
+---
+import { Image } from 'astro:assets'
+import Navigation from './Navigation.astro'
+import ThemeIcon from './ThemeIcon.astro'
+---
+
+<header class="w-full space-y-[1rem] mt-[1.25rem] mb-[5rem]">
+    <nav class="flex flex-row justify-between items-center">
+        <Navigation />
+        <ThemeIcon />
+    </nav>
+
+    <Image
+        class="inline dark:hidden w-[240px] h-auto tablet:w-[300px]"
+        src="/images/logo/light.svg"
+        alt="로고 라이트 모드"
+        width={300}
+        height={50}
+    />
+    <Image
+        class="hidden dark:inline w-[240px] h-auto tablet:w-[300px]"
+        src="/images/logo/dark.svg"
+        alt="로고 다크 모드"
+        width={300}
+        height={50}
+    />
+</header>

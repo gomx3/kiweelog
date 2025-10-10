@@ -1,85 +1,50 @@
 @import 'tailwindcss';
-@import './fonts.css';
+@import './webfonts.css';
 
-@layer base {
-    /* light mode */
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+    --background: #f0f0f0;
+    --foreground: #292524;
+    box-sizing: border-box;
+}
+
+:root.dark,
+.dark :root {
+    --background: #1c1917;
+    --foreground: #d6d3d1;
+    box-sizing: border-box;
+}
+
+@media (prefers-color-scheme: dark) {
     :root {
-        --color-text-primary: #000000;
-        --color-bg-surface: #f4f3ee;
-    }
-
-    /* dark mode */
-    .dark {
-        --color-text-primary: #ffffff;
-        --color-bg-surface: #0f0905;
-    }
-
-    body {
-        @apply bg-[color:var(--color-bg-surface)] text-[color:var(--color-text-primary)] transition-colors duration-200 ease-in;
+        --background: #1c1917;
+        --foreground: #d6d3d1;
     }
 }
 
-/* nav 스타일 */
-/* 
-.nav-links {
-    width: 100%;
-    top: 5rem;
-    left: 48px;
-    background-color: #ff9776;
-    display: none;
-    margin: 0;
+body {
+    background: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-nexonlv2), sans-serif;
+    min-width: 360px;
 }
 
-.nav-links a {
-    display: block;
-    text-align: center;
-    padding: 10px 0;
-    text-decoration: none;
-    font-size: 1.2rem;
-    font-weight: bold;
-    text-transform: uppercase;
+@theme {
+    --font-nexonlv2: 'NexonLv2Gothic';
+
+    --color-primary-50: #fcfff5;
+    --color-primary-100: #edfdc5;
+    --color-primary-200: #ddf998;
+    --color-primary-300: #cdf270;
+    --color-primary-400: #bee950;
+    --color-primary-500: #aedd38;
+    --color-primary-600: #93cd27;
+    --color-primary-700: #8bb81b;
+    --color-primary-800: #78a013;
+    --color-primary-900: #65870e;
+
+    --breakpoint-desktop: 1024px;
+    --breakpoint-tablet: 768px;
+    --breakpoint-mobile: 360px;
 }
-
-.nav-links a:hover,
-.nav-links a:focus {
-    background-color: #ff9776;
-}
-
-.expanded {
-    display: unset;
-}
-
-@media screen and (min-width: 636px) {
-    .nav-links {
-        margin-left: 5em;
-        display: block;
-        position: static;
-        width: auto;
-        background: none;
-    }
-
-    .nav-links a {
-        display: inline-block;
-        padding: 15px 20px;
-    }
-}
-
-pre {
-    background-color: #f5f5f5 !important;
-    color: #2d2d2d !important;
-    border-radius: 8px;
-    padding: 1rem;
-    overflow-x: auto;
-}
-
-code {
-    background-color: transparent !important;
-}
-
-.dark pre {
-    background-color: #1c110a !important;
-    color: #1c110a !important;
-    border-radius: 8px;
-    padding: 1rem;
-    overflow-x: auto;
-} */

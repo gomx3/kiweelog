@@ -1,0 +1,31 @@
+---
+import { SOCIAL_ICONS, socialLinks } from './social.ts'
+
+interface Props {
+    platform: string
+}
+
+const { platform } = Astro.props
+
+const svgIconContent = SOCIAL_ICONS[platform]
+const url = socialLinks[platform]
+---
+
+<a
+    href={url}
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label={`Visit my ${platform} profile`}
+    class="flex justify-center items-center p-[0.5rem] rounded-[0.75rem] bg-stone-200 hover:bg-stone-300
+        transition-colors duration-200 dark:bg-stone-800 dark:hover:bg-stone-700"
+>
+    {svgIconContent ? <Fragment set:html={svgIconContent} /> : platform}
+</a>
+
+<style>
+    a :global(svg) {
+        width: 20px;
+        height: 20px;
+        fill: currentColor;
+    }
+</style>

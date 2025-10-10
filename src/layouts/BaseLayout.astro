@@ -1,11 +1,9 @@
 ---
-// import Header from '../components/Header.astro'
-// import Footer from '../components/Footer.astro'
+import Header from '../common/header/Header.astro'
+import Footer from '../common/footer/Footer.astro'
 import '../styles/global.css'
 
 import { WEBPAGE_INFO } from '../constants'
-
-const { pageTitle } = Astro.props
 ---
 
 <html lang="ko">
@@ -17,9 +15,14 @@ const { pageTitle } = Astro.props
         <title>{WEBPAGE_INFO.TITLE}</title>
     </head>
     <body>
-        <!-- <Header />
-        <h1>{pageTitle}</h1> -->
-        <slot />
-        <!-- <Footer /> -->
+        <div class="flex flex-col justify-center items-center px-[3rem]">
+            <div class="max-w-[912px] w-full">
+                <Header />
+                <main>
+                    <slot />
+                </main>
+                <Footer />
+            </div>
+        </div>
     </body>
 </html>

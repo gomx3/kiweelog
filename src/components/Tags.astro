@@ -1,0 +1,19 @@
+---
+import { getCollection } from 'astro:content'
+
+const allPosts = await getCollection('blog')
+const tags = [...new Set(allPosts.map((post: any) => post.data.tags).flat())]
+---
+
+<div class="flex flex-row flex-wrap justify-center gap-2">
+    {
+        tags.map((tag) => (
+            <p
+                class="flex justify-center items-center px-[0.5rem] py-[0.25rem] rounded-[0.75rem] text-[0.875rem]
+                    border border-stone-300 hover:bg-stone-200 transition-colors duration-300 dark:border-stone-700 dark:hover:bg-stone-700"
+            >
+                <a href={`/tags/${tag}`}>{tag}</a>
+            </p>
+        ))
+    }
+</div>

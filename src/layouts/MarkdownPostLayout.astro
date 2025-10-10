@@ -10,7 +10,7 @@ const { frontmatter } = Astro.props
     <p>Written by {frontmatter.author}</p>
 
     <div class="perspective-distant">
-        <article class="rotate-x-22 rotate-z-12 transform-3d">
+        <article>
             <img src={frontmatter.image.url} width="500" alt={frontmatter.image.alt} />
         </article>
 

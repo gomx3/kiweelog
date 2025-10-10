@@ -68,4 +68,10 @@
     document.getElementById('themeToggle')?.addEventListener('click', handleToggleClick)
 
     const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)')
+
+    systemPrefersDark.addEventListener('change', (e) => {
+        const newTheme = e.matches ? 'dark' : 'light'
+        document.documentElement.classList.toggle('dark', e.matches)
+        localStorage.setItem('theme', newTheme)
+    })
 </script>
