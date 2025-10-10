@@ -4,6 +4,8 @@ import Footer from '../common/footer/Footer.astro'
 import '../styles/global.css'
 
 import { WEBPAGE_INFO } from '../constants'
+
+const { pageTitle, pageDescription, author } = Astro.props
 ---
 
 <html lang="ko">
@@ -12,7 +14,10 @@ import { WEBPAGE_INFO } from '../constants'
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
         <meta name="viewport" content="width=device-width" />
         <meta name="generator" content={Astro.generator} />
-        <title>{WEBPAGE_INFO.TITLE}</title>
+
+        <title>{pageTitle ?? WEBPAGE_INFO.TITLE}</title>
+        <meta name="description" content={pageDescription ?? WEBPAGE_INFO.DESCRIPTION} />
+        {author && <meta name="author" content={author} />}
     </head>
     <body>
         <div class="flex flex-col justify-center items-center px-[3rem]">
