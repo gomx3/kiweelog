@@ -6,6 +6,10 @@ import '../styles/global.css'
 import { WEBPAGE_INFO } from '../constants'
 
 const { pageTitle, pageDescription, pageImage, author } = Astro.props
+
+const title = pageTitle ?? WEBPAGE_INFO.TITLE
+const description = pageDescription ?? WEBPAGE_INFO.DESCRIPTION
+const image = pageImage ?? WEBPAGE_INFO.IMAGE
 ---
 
 <html lang="ko">
@@ -16,21 +20,21 @@ const { pageTitle, pageDescription, pageImage, author } = Astro.props
         <meta name="viewport" content="width=device-width" />
         <meta name="generator" content={Astro.generator} />
 
-        <title>{pageTitle ?? WEBPAGE_INFO.TITLE}</title>
-        <meta name="description" content={pageDescription ?? WEBPAGE_INFO.DESCRIPTION} />
+        <title>{title}</title>
+        <meta name="description" content={description} />
         {author && <meta name="author" content={author} />}
 
         <meta property="og:type" content="website" />
-        <meta property="og:url" content={WEBPAGE_INFO.URL} />
-        <meta property="og:title" content={pageTitle ?? WEBPAGE_INFO.TITLE} />
-        <meta property="og:description" content={pageDescription ?? WEBPAGE_INFO.DESCRIPTION} />
-        <meta property="og:image" content={pageImage ?? WEBPAGE_INFO.IMAGE} />
+        <meta property="og:url" content={Astro.url} />
+        <meta property="og:title" content={title} />
+        <meta property="og:description" content={description} />
+        <meta property="og:image" content={image} />
 
         <meta property="twitter:card" content="summary_large_image" />
-        <meta property="twitter:url" content={WEBPAGE_INFO.URL} />
-        <meta property="twitter:title" content={pageTitle ?? WEBPAGE_INFO.TITLE} />
-        <meta property="twitter:description" content={pageDescription ?? WEBPAGE_INFO.DESCRIPTION} />
-        <meta property="twitter:image" content={pageImage ?? WEBPAGE_INFO.IMAGE} />
+        <meta property="twitter:url" content={Astro.url} />
+        <meta property="twitter:title" content={title} />
+        <meta property="twitter:description" content={description} />
+        <meta property="twitter:image" content={image} />
     </head>
     <body>
         <div class="flex flex-col justify-center items-center px-[2rem]">

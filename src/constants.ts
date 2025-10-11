@@ -3,7 +3,6 @@ export const WEBPAGE_INFO = {
     DESCRIPTION: '개발자 김소원의 프로젝트, 기술 학습, 트러블슈팅 여정을 공유하는 블로그',
     LANGUAGE: 'ko-KR',
     IMAGE: '/logo/og.png',
-    URL: import.meta.env.RROD_URL,
 } as const
 
 export const GISCUS = {
