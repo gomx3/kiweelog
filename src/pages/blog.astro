@@ -17,7 +17,7 @@ const allPosts = (await getCollection('blog')).sort((a, b) => b.data.pubDate.val
 
         <ul class="space-y-8">
             {
-                allPosts.map((post: any) => (
+                allPosts.map((post) => (
                     <li>
                         <BlogPost
                             url={`/posts/${post.id}/`}

@@ -18,7 +18,7 @@ const { url, title, description, image } = Astro.props
         hover:-translate-y-1 transition-transform duration-300"
 >
     {
-        image.url && (
+        image?.url && (
             <div class="w-full h-full border-r border-stone-300 dark:border-stone-700">
                 <img src={image.url} alt={image.alt} class="object-cover" />
             </div>

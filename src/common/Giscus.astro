@@ -32,7 +32,7 @@ const { repo, repoId, category, categoryId } = Astro.props
     window.addEventListener('theme-change', (e) => {
         const newTheme = e.detail.theme
         const giscusFrame = document.querySelector('iframe.giscus-frame')
-        if (giscusFrame) {
+        if (giscusFrame && giscusFrame.contentWindow) {
             giscusFrame.contentWindow.postMessage(
                 { giscus: { setConfig: { theme: `noborder_${newTheme}` } } },
                 'https://giscus.app'
