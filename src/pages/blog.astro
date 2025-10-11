@@ -3,34 +3,31 @@ import BaseLayout from '../layouts/BaseLayout.astro'
 import BlogPost from '../common/BlogPost.astro'
 import { getCollection } from 'astro:content'
 
-const allPosts = await getCollection('blog')
+const allPosts = (await getCollection('blog')).sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
 ---
 
 <BaseLayout>
-    <h2>My Astro Learning Blog</h2>
-    <p>This is where I will post about my journey learning Astro.</p>
+    <div class="flex flex-col gap-12">
+        <div class="flex flex-col gap-4">
+            <h1 class="text-3xl font-bold text-center">📄 Posts</h1>
+            <p class="text-center text-stone-600 dark:text-stone-400">
+                총 {allPosts.length}개의 포스트가 있습니다.
+            </p>
+        </div>
 
-    <ul>
-        {allPosts.map((post: any) => <BlogPost url={`/posts/${post.id}/`} title={post.data.title} />)}
-    </ul>
+        <ul class="space-y-8">
+            {
+                allPosts.map((post: any) => (
+                    <li>
+                        <BlogPost
+                            url={`/posts/${post.id}/`}
+                            title={post.data.title}
+                            description={post.data.description}
+                            image={post.data.image}
+                        />
+                    </li>
+                ))
+            }
+        </ul>
+    </div>
 </BaseLayout>
-
-<style>
-    a {
-        color: #00539f;
-    }
-
-    .tags {
-        display: flex;
-        flex-wrap: wrap;
-    }
-
-    .tag {
-        margin: 0.25em;
-        border: dotted 1px #a1a1a1;
-        border-radius: 0.5em;
-        padding: 0.5em 1em;
-        font-size: 1rem;
-        background-color: #f8fcfd;
-    }
-</style>

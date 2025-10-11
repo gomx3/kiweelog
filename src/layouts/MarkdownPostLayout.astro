@@ -1,49 +1,62 @@
 ---
+import Tags from '../components/Tags.astro'
 import BaseLayout from './BaseLayout.astro'
 
 const { frontmatter } = Astro.props
 ---
 
-<BaseLayout pageTitle={frontmatter.title} pageDescription={frontmatter.description} author={frontmatter.author}>
-    <p>Published on: {frontmatter.pubDate.toLocaleDateString().slice(0, 10)}</p>
-    <p><em>{frontmatter.description}</em></p>
-    <p>Written by {frontmatter.author}</p>
+<BaseLayout pageTitle={frontmatter.title} pageDescription={frontmatter.description}>
+    <article
+        class="px-[1.5rem] tablet:px-[3.25rem] py-[2.75rem] w-full rounded-[1rem] tablet:rounded-[0.75rem] bg-stone-100 dark:bg-stone-800/50"
+    >
+        <header class="mb-8 text-center">
+            <h1 class="text-[1.875rem] md:text-[2rem] font-bold mb-4 text-stone-900 dark:text-stone-100">
+                {frontmatter.title}
+            </h1>
+            <p class="text-[1rem] italic text-stone-600 dark:text-stone-400 mb-4">{frontmatter.description}</p>
+            <div class="flex justify-center items-center gap-4 text-sm text-stone-500 dark:text-stone-400">
+                <span>
+                    Posted on: {
+                        new Date(frontmatter.pubDate).toLocaleDateString('ko-KR', {
+                            year: 'numeric',
+                            month: 'long',
+                            day: 'numeric',
+                        })
+                    }
+                </span>
+                <span>•</span>
+                <span>By {frontmatter.author}</span>
+            </div>
+            <div class="flex flex-wrap justify-center gap-2 mt-6">
+                <Tags tags={frontmatter.tags} />
+            </div>
+        </header>
 
-    <div class="perspective-distant">
-        <article>
-            <img src={frontmatter.image.url} width="500" alt={frontmatter.image.alt} />
-        </article>
+        {
+            frontmatter.image?.url && (
+                <div class="my-8">
+                    <img
+                        src={frontmatter.image.url}
+                        alt={frontmatter.image.alt}
+                        class="rounded-lg w-full object-cover border border-stone-200 dark:border-stone-700"
+                        width="1200"
+                        height="630"
+                    />
+                </div>
+            )
+        }
 
-        <div class="tags">
-            {
-                frontmatter.tags.map((tag: string) => (
-                    <p class="tag">
-                        <a href={`/tags/${tag}`}>{tag}</a>
-                    </p>
-                ))
-            }
+        <hr class="my-8 border-stone-200 dark:border-stone-700" />
+
+        <div
+            class="prose prose-lg dark:prose-invert prose-stone max-w-none
+                prose-headings:font-bold prose-headings:text-stone-800 dark:prose-headings:text-stone-200
+                prose-headings:mt-12
+                prose-a:text-blue-600 dark:prose-a:text-blue-400 hover:prose-a:underline
+                prose-pre:bg-stone-100 dark:prose-pre:bg-stone-800 prose-pre:rounded-md prose-pre:p-4
+                prose-img:rounded-md"
+        >
+            <slot />
         </div>
-
-        <slot />
-    </div>
-
-    <style>
-        a {
-            color: #00539f;
-        }
-
-        .tags {
-            display: flex;
-            flex-wrap: wrap;
-        }
-
-        .tag {
-            margin: 0.25em;
-            border: dotted 1px #a1a1a1;
-            border-radius: 0.5em;
-            padding: 0.5em 1em;
-            font-size: 1.15em;
-            background-color: #f8fcfd;
-        }
-    </style>
+    </article>
 </BaseLayout>

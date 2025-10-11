@@ -1,7 +1,11 @@
 ---
+import { getCollection } from 'astro:content'
 import BuddhaBless from '../components/BuddhaBless.astro'
 import Tags from '../components/Tags.astro'
 import BaseLayout from '../layouts/BaseLayout.astro'
+
+const allPosts = await getCollection('blog')
+const tags = [...new Set(allPosts.map((post: any) => post.data.tags).flat())]
 ---
 
 <BaseLayout>
@@ -17,7 +21,7 @@ import BaseLayout from '../layouts/BaseLayout.astro'
 
         <hr class="text-stone-300 dark:text-stone-600" />
 
-        <Tags />
+        <Tags tags={tags} />
         <BuddhaBless />
     </div>
 </BaseLayout>
