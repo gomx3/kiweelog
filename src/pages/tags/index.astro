@@ -1,41 +1,7 @@
 ---
-import { getCollection } from 'astro:content'
-import BaseLayout from '../../layouts/BaseLayout.astro'
-
-const pageTitle = 'Tag Index'
-
-const allPosts = await getCollection('blog')
-const tags = [...new Set(allPosts.map((post: any) => post.data.tags).flat())]
+import TagsLayout from '../../layouts/TagsLayout.astro'
 ---
 
-<BaseLayout pageTitle={pageTitle}>
-    <div class="tags">
-        {
-            tags.map((tag) => (
-                <p class="tag">
-                    <a href={`/tags/${tag}`}>{tag}</a>
-                </p>
-            ))
-        }
-    </div>
-</BaseLayout>
-
-<style>
-    a {
-        color: #00539f;
-    }
-
-    .tags {
-        display: flex;
-        flex-wrap: wrap;
-    }
-
-    .tag {
-        margin: 0.25em;
-        border: dotted 1px #a1a1a1;
-        border-radius: 0.5em;
-        padding: 0.5em 1em;
-        font-size: 1.15em;
-        background-color: #f8fcfd;
-    }
-</style>
+<TagsLayout>
+    <p class="text-center text-stone-500">궁금한 주제의 태그를 클릭하시면 관련된 글들을 모아볼 수 있습니다.</p>
+</TagsLayout>

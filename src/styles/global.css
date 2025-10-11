@@ -1,5 +1,6 @@
 @import 'tailwindcss';
 @import './webfonts.css';
+@plugin "@tailwindcss/typography";
 
 @custom-variant dark (&:where(.dark, .dark *));
 
@@ -25,6 +26,8 @@ body {
 
 @theme {
     --font-nexonlv2: 'NexonLv2Gothic';
+
+    --color-base-black: '#222222';
 
     --color-primary-50: #fcfff5;
     --color-primary-100: #edfdc5;

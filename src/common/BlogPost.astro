@@ -1,5 +1,37 @@
 ---
-const { url, title } = Astro.props
+interface Props {
+    url: string
+    title: string
+    description: string
+    image: {
+        url: string
+        alt: string
+    }
+}
+
+const { url, title, description, image } = Astro.props
 ---
 
-<li><a href={url}>{title}</a></li>
+<a
+    href={url}
+    class="group grid grid-cols-3 max-h-[10.875rem] bg-stone-200 dark:bg-stone-800 border border-stone-300 dark:border-stone-700 rounded-[0.5rem] overflow-hidden
+        hover:-translate-y-1 transition-transform duration-300"
+>
+    {
+        image?.url && (
+            <div class="w-full h-full border-r border-stone-300 dark:border-stone-700">
+                <img src={image.url} alt={image.alt} class="object-cover" />
+            </div>
+        )
+    }
+
+    <div class="col-span-2 p-6">
+        <h3 class="text-[1.25rem] text-stone-900 dark:text-white mb-2 line-clamp-2">
+            {title}
+        </h3>
+
+        <p class="text-stone-600 dark:text-stone-400 text-sm line-clamp-3">
+            {description}
+        </p>
+    </div>
+</a>

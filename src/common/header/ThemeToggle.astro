@@ -3,7 +3,7 @@
 ---
 
 <button id="themeToggle">
-    <svg width="30px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+    <svg width="30px" height="30px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
         <path
             class="sun"
             fill-rule="evenodd"
@@ -19,21 +19,54 @@
 
 <style>
     #themeToggle {
-        border: 0;
+        border: none;
         background: none;
+        cursor: pointer;
+        transition: transform 0.3s ease;
     }
+
+    #themeToggle:hover {
+        transform: rotate(15deg) scale(1.1);
+    }
+
+    svg {
+        transition:
+            transform 0.6s ease,
+            fill 0.3s ease;
+        transform-origin: center;
+    }
+
+    .sun,
+    .moon {
+        transition:
+            fill 0.5s ease,
+            opacity 0.6s ease,
+            transform 0.6s ease;
+        transform-origin: center;
+    }
+
     .sun {
-        fill: black;
+        fill: #000;
+        opacity: 1;
+        transform: rotate(0deg) scale(1);
     }
+
     .moon {
         fill: transparent;
+        opacity: 0;
+        transform: rotate(-90deg) scale(0.5);
     }
 
     :global(.dark) .sun {
         fill: transparent;
+        opacity: 0;
+        transform: rotate(90deg) scale(0.5);
     }
+
     :global(.dark) .moon {
-        fill: white;
+        fill: #fff;
+        opacity: 1;
+        transform: rotate(0deg) scale(1);
     }
 </style>
 
@@ -57,12 +90,22 @@
 
     window.localStorage.setItem('theme', theme)
 
+    const dispatchThemeChangeEvent = (newTheme) => {
+        const event = new CustomEvent('theme-change', {
+            detail: { theme: newTheme },
+        })
+        window.dispatchEvent(event)
+    }
+
     const handleToggleClick = () => {
         const element = document.documentElement
         element.classList.toggle('dark')
 
         const isDark = element.classList.contains('dark')
-        localStorage.setItem('theme', isDark ? 'dark' : 'light')
+        const newTheme = isDark ? 'dark' : 'light'
+        localStorage.setItem('theme', newTheme)
+
+        dispatchThemeChangeEvent(newTheme)
     }
 
     document.getElementById('themeToggle')?.addEventListener('click', handleToggleClick)
@@ -73,5 +116,7 @@
         const newTheme = e.matches ? 'dark' : 'light'
         document.documentElement.classList.toggle('dark', e.matches)
         localStorage.setItem('theme', newTheme)
+
+        dispatchThemeChangeEvent(newTheme)
     })
 </script>
