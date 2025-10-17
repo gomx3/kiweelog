@@ -28,6 +28,7 @@ const image = pageImage ?? WEBPAGE_INFO.IMAGE
         <meta property="og:type" content="website" />
         <meta property="og:url" content={Astro.url} />
         <meta property="og:title" content={title} />
+        <meta property="og:site_name" content="Kiweelog" />
         <meta property="og:description" content={description} />
         <meta property="og:image" content={image} />
 
@@ -36,6 +37,15 @@ const image = pageImage ?? WEBPAGE_INFO.IMAGE
         <meta property="twitter:title" content={title} />
         <meta property="twitter:description" content={description} />
         <meta property="twitter:image" content={image} />
+
+        <script type="application/ld+json">
+            {
+                "@context": "https://schema.org",
+                "@type": "WebSite",
+                "name": "Kiweelog",
+                "url": "https://kiweelog.netlify.app/"
+            }
+        </script>
     </head>
     <body>
         <div class="flex flex-col justify-center items-center px-[2rem]">
