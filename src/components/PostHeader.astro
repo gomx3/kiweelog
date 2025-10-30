@@ -1,0 +1,51 @@
+---
+import Tags from './Tags.astro'
+
+interface Props {
+    title: string
+    pubDate: string | Date
+    author: string
+    description?: string
+    image?: {
+        url: string
+        alt?: string
+    }
+    tags?: string[]
+}
+
+const { title, pubDate, author, description, image, tags } = Astro.props
+---
+
+<header class="flex flex-col gap-6 text-start">
+    <h1
+        class="break-words w-full text-[2rem] tablet:text-[2.875rem] font-medium text-stone-700 dark:text-stone-100 leading-[120%]"
+    >
+        {title}
+    </h1>
+
+    <span class="text-stone-500 dark:text-stone-400">
+        {
+            new Date(pubDate).toLocaleDateString('ko-KR', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+            })
+        } • {author}
+    </span>
+
+    {
+        image?.url && (
+            <img
+                src={image.url}
+                alt={image.alt || ''}
+                class="rounded-[0.875rem] w-full max-h-[17.5rem] tablet:max-h-[23.75rem] object-cover border border-stone-200 dark:border-stone-700"
+                width="1200"
+                height="600"
+            />
+        )
+    }
+
+    {description && <p class="text-[1rem] text-stone-500 dark:text-stone-400">{description}</p>}
+
+    {tags && <Tags tags={tags} />}
+</header>

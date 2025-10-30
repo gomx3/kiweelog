@@ -1,17 +1,18 @@
 ---
-title: Astro/React에서 GSAP 사용하기 (useGSAP)
+title: Astro·React에서 useGSAP으로 애니메이션 구현하기
 author: 김소원
-description: 'Astro 프로젝트에서 useGSAP 훅을 활용해 GSAP를 사용하는 방법을 알아봅니다.'
+description: 'Astro·React 프로젝트에서 useGSAP 훅을 활용해 GSAP을 사용하는 방법을 알아봅니다. 컴포넌트 기반 구조에서 부드럽고 직관적인 애니메이션을 구현할 수 있습니다.'
 image:
-    url: '/images/astro-react-gsap-guide/result.png'
+    url: '/images/astro-react-gsap-guide/thumbnail.png'
     alt: 'The Astro logo on a dark background with a purple gradient arc.'
 pubDate: 2025-10-11
 tags: ['Astro', 'react', 'GSAP', '인터랙션']
 ---
 
-Astro.js React 웹에서 GSAP를 사용한 사용자 인터랙션 구현에 대해서
+나는 Astro로 구현한 정적 웹페이지에서 위와 같은 GSAP의 Drop on Target이라는 Draggable 예제 데모와 비슷한 컴포넌트를 구현하고 싶었다. 다음 예제와 같이 왼쪽에 스티커를 오른쪽 Drop Area 안에서 원하는 위치에 붙일 수 있는 사용자 인터랙션을 구현한다.
 
-나는 Astro로 구현한 정적 웹페이지에서 위와 같은 GSAP의 Drop on Target이라는 Draggable 예제 데모와 비슷한 컴포넌트를 구현하고 싶었다. 사진과 같이 왼쪽에 스티커를 오른쪽 Drop Area 안에서 원하는 위치에 붙일 수 있는 사용자 인터랙션을 구현한다.
+![Draggable: Drop on target only](/images/astro-react-gsap-guide/example.png)
+[GSAP - Draggable: drop on target only](https://codepen.io/GreenSock/pen/Pqwxvw)
 
 먼저 `index.astro`에서 인터랙션을 구현할 컴포넌트를 `client:only="react"`로 불러온다. 이는 React 컴포넌트를 HTML 서버 렌더링 하지 않고, 클라이언트에서만 렌더링하겠다는 의미이다. GSAP처럼 브라우저 환경에 직접 접근(DOM 조작)하는 라이브러리를 서버에서 렌더링될 수 없으므로 해당 속성을 사용하는 것이다.
 
@@ -26,13 +27,13 @@ import Sticker from '../components/Sticker'
 </BaseLayout>
 ```
 
-**`client:only`를 포함한 Astro의 지시어에 관하여**
+> `client:only`를 포함한 Astro의 지시어에 관하여
 
-먼저 **템플릿 지시어**는 Astro 컴포넌트 템플릿 (`.astro` 파일)에서 사용할 수 있는 HTML 속성이다. 요소나 컴포넌트의 **동작을 제어**하는 데 사용된다. 컴파일러 기능을 활성화할 수 있고(예: `class` 대신 `class:list` 사용) 컴파일러에게 특별한 작업을 수행하도록 지시할 수도 있다. (예: `client:load`를 사용하여 hydration)
+먼저 템플릿 지시어는 Astro 컴포넌트 템플릿 (`.astro` 파일)에서 사용할 수 있는 HTML 속성이다. 요소나 컴포넌트의 **동작을 제어**하는 데 사용된다. 컴파일러 기능을 활성화할 수 있고(예: `class` 대신 `class:list` 사용) 컴파일러에게 특별한 작업을 수행하도록 지시할 수도 있다. (예: `client:load`를 사용하여 hydration)
 
 지금 우리가 알고 싶은 부분은 `client:only`, `client:load` 이므로 이 부분에 대해서만 간단하게 설명한다. Astro에서 제공하는 나머지 클라이언트 지시어 및 서버 지시어, 공통 지시어 목록과 자세한 설명은 위의 공식 문서에서 확인할 수 있다. [템플릿 지시어 참조](https://docs.astro.build/ko/reference/directives-reference/)
 
-**클라이언트 지시어**
+## **클라이언트 지시어**
 
 UI 컴포넌트가 페이지에서 hydration되는 방식을 제어한다. 기본적으로 컴포넌트는 클라이언트에서 수화되지 않는다. `client:*` 지시어가 제공되지 않으면 HTML이 JavaScript 없이 페이지에 렌더링된다. 정적 Astro 앱에서 컴포넌트와 사용자의 동적 상호작용을 구현하고 싶을 때 사용한다.
 
@@ -43,12 +44,12 @@ UI 컴포넌트가 페이지에서 hydration되는 방식을 제어한다. 기�
 - `client:load`
   **페이지 로드 시** 컴포넌트의 JavaScript를 즉시 로드하여 hydration하기 위한 지시어이다. 가능한 한 빨리 동적으로 작동해야 하는 즉시 표시되는 UI 요소를 생성할 때 유용하다.
 - `client:visible`
-  지시어가 적용되는 **컴포넌트가 페이지에 표시될 때** JavaScript를 로드하여 hydration하기 위한 지시어이다. 페이지 아래쪽(스크롤해야 볼 수 있는 부분)에 있거나, 로드하는 데 리소스를 많이 사용하여 사용자가 해당 요소를 보기 어려운 경우 보여주지 않는 우선 순위가 낮은 UI 요소를 생성할 때 유용하다.
+  지시어가 적용되는 컴포넌트가 페이지에 표시될 때 JavaScript를 로드하여 hydration하기 위한 지시어이다. 페이지 아래쪽(스크롤해야 볼 수 있는 부분)에 있거나, 로드하는 데 리소스를 많이 사용하여 사용자가 해당 요소를 보기 어려운 경우 보여주지 않는 우선 순위가 낮은 UI 요소를 생성할 때 유용하다.
     - `client:visible={{rootMargin}}`
       선택적으로 `rootMargin` 값을 기본 `IntersectionObserver`에 전달하여 컴포넌트 주변 지정 마진(픽셀)이 뷰 포트에 들어갈 때 JavaScript를 hydration할 수 있다.
 - `client:only`
   `client:only={string}` HTML 서버 렌더링을 건너뛰고 클라이언트에서만 렌더링한다. 페이지 로드 시 즉시 컴포넌트를 로드, 렌더링 및 hydration한다는 점에서 `client:load`와 유사하게 동작한다.
-  해당 지시어를 사용할 때는 컴포넌트가 사용하는 **프레임워크 값을 올바르게 전달할 것**을 주의해야 한다. Astro는 서버에서 빌드하는 동안 컴포넌트를 실행하지 않기에 명시적으로 지정하지 않으면 컴포넌트가 어떤 프레임워크에서 JS를 동작하는지 사용하는지 알 수 없다.
+  해당 지시어를 사용할 때는 컴포넌트가 사용하는 프레임워크 값을 올바르게 전달할 것을 주의해야 한다. Astro는 서버에서 빌드하는 동안 컴포넌트를 실행하지 않기에 명시적으로 지정하지 않으면 컴포넌트가 어떤 프레임워크에서 JS를 동작하는지 사용하는지 알 수 없다.
 
 ```astro
 <SomeReactComponent client:only="react" />
@@ -73,42 +74,42 @@ Astro의 클라이언트 지시어에 대한 설명이 너무 길어졌다. 이�
 ```ts
 // See https://www.greensock.com/draggable/ for more details.
 
-const droppables = document.querySelectorAll(".box");
-const dropArea = document.getElementById("dropArea");
-const overlapThreshold = "99%";
+const droppables = document.querySelectorAll('.box')
+const dropArea = document.getElementById('dropArea')
+const overlapThreshold = '99%'
 
 // Utility to add/remove class
 function addClass(el, className) {
-  el.classList.add(className);
+    el.classList.add(className)
 }
 
 function removeClass(el, className) {
-  el.classList.remove(className);
+    el.classList.remove(className)
 }
 
 function hasClass(el, className) {
-  return el.classList.contains(className);
+    return el.classList.contains(className)
 }
 
 Draggable.create(droppables, {
-  bounds: window,
-  onDrag: function () {
-    if (this.hitTest(dropArea, overlapThreshold)) {
-      addClass(this.target, "highlight");
-    } else {
-      removeClass(this.target, "highlight");
-    }
-  },
-  onDragEnd: function () {
-    if (!hasClass(this.target, "highlight")) {
-      gsap.to(this.target, {
-        duration: 0.2,
-        x: 0,
-        y: 0
-      });
-    }
-  }
-});
+    bounds: window,
+    onDrag: function () {
+        if (this.hitTest(dropArea, overlapThreshold)) {
+            addClass(this.target, 'highlight')
+        } else {
+            removeClass(this.target, 'highlight')
+        }
+    },
+    onDragEnd: function () {
+        if (!hasClass(this.target, 'highlight')) {
+            gsap.to(this.target, {
+                duration: 0.2,
+                x: 0,
+                y: 0,
+            })
+        }
+    },
+})
 ```
 
 이 바닐라 JS 코드는 React에서 그대로 사용할 수 없다. React는 가상 DOM으로 UI를 관리하기 때문에 `document.querySelector` 같은 명령어로 DOM을 직접 조작할 수 없다. (React 상태와 실제 DOM 간에 불일치가 발생하여 오류가 발생한다)
