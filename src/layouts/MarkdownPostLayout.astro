@@ -1,60 +1,34 @@
 ---
 import Giscus from '../common/Giscus.astro'
-import Tags from '../components/Tags.astro'
 import BaseLayout from './BaseLayout.astro'
 import { GISCUS } from '../constants.ts'
+import PostHeader from '../components/PostHeader.astro'
 
 const { frontmatter } = Astro.props
 ---
 
 <BaseLayout pageTitle={frontmatter.title} pageDescription={frontmatter.description} pageImage={frontmatter.image.url}>
-    <article
-        class="px-[1.5rem] tablet:px-[3.25rem] py-[2.75rem] w-full space-y-8 rounded-[1rem] tablet:rounded-[0.75rem] bg-stone-100 dark:bg-stone-800/50"
-    >
-        <header class="mb-8 text-center">
-            <h1 class="text-[1.875rem] md:text-[2rem] font-bold mb-4 text-stone-900 dark:text-stone-100">
-                {frontmatter.title}
-            </h1>
-            <p class="text-[1rem] italic text-stone-600 dark:text-stone-400 mb-4">{frontmatter.description}</p>
-            <div class="flex justify-center items-center gap-4 text-sm text-stone-500 dark:text-stone-400">
-                <span>
-                    Posted on: {
-                        new Date(frontmatter.pubDate).toLocaleDateString('ko-KR', {
-                            year: 'numeric',
-                            month: 'long',
-                            day: 'numeric',
-                        })
-                    }
-                </span>
-                <span>•</span>
-                <span>By {frontmatter.author}</span>
-            </div>
-            <div class="flex flex-wrap justify-center gap-2 mt-6">
-                <Tags tags={frontmatter.tags} />
-            </div>
-        </header>
-
-        {
-            frontmatter.image?.url && (
-                <img
-                    src={frontmatter.image.url}
-                    alt={frontmatter.image.alt}
-                    class="rounded-lg w-full object-cover border border-stone-200 dark:border-stone-700"
-                    width="1200"
-                    height="630"
-                />
-            )
-        }
+    <article class="w-full space-y-14 rounded-[1rem] tablet:rounded-[0.75rem]">
+        <PostHeader
+            title={frontmatter.title}
+            pubDate={frontmatter.pubDate}
+            author={frontmatter.author}
+            description={frontmatter.description}
+            image={frontmatter.image}
+            tags={frontmatter.tags}
+        />
 
         <hr class="border-stone-200 dark:border-stone-700" />
 
         <div
-            class="prose prose-lg dark:prose-invert prose-stone max-w-none
-                prose-headings:font-bold prose-headings:text-stone-800 dark:prose-headings:text-stone-200
-                prose-headings:mt-12
-                prose-a:text-blue-600 dark:prose-a:text-blue-400 hover:prose-a:underline
-                prose-pre:bg-stone-100 dark:prose-pre:bg-stone-800 prose-pre:rounded-md prose-pre:p-4
-                prose-img:rounded-md"
+            class="prose dark:prose-invert prose-stone max-w-none
+            prose-p:mt-8
+                prose-headings:font-bold prose-headings:mt-12
+                prose-a:text-primary-800 dark:prose-a:text-primary-400 hover:prose-a:underline
+                prose-pre:rounded-[0.875rem]
+                prose-code:before:content-none
+                prose-code:after:content-none
+                prose-img:rounded-[0.875rem]"
         >
             <slot />
         </div>

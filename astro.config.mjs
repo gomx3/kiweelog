@@ -13,4 +13,12 @@ export default defineConfig({
         plugins: [tailwindcss()],
     },
     integrations: [react(), mdx(), sitemap()],
+    markdown: {
+        shikiConfig: {
+            themes: {
+                light: 'catppuccin-frappe',
+                dark: 'tokyo-night',
+            },
+        },
+    },
 })
