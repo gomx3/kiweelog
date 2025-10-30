@@ -45,7 +45,7 @@ tags: ['Vite', 'React', 'TypeScript', 'CORS', 'Proxy']
 
 3.  Proxy
 
-        Proxy는 API로 네트워크 요청/응답을 주고 받는 클라이언트와 서버 사이를 중개하는 역할을 한다.
+    Proxy는 API로 네트워크 요청/응답을 주고 받는 클라이언트와 서버 사이를 중개하는 역할을 한다.
 
     프론트엔드에서 Proxy를 이용해 우회하면, 클라이언트에서 API를 요청할 때 백엔드 서버에 직접적으로 요청하지 않고 현재 개발 서버 주소로 요청을 한다.
 
@@ -105,6 +105,7 @@ tags: ['Vite', 'React', 'TypeScript', 'CORS', 'Proxy']
                         changeOrigin: true,
                         rewrite: (path) => path.replace(/^\/api/, ''),
                         secure: false,
+                        ws: true,
                     },
                 },
             },
