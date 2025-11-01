@@ -6,10 +6,10 @@ import BlogPost from '../common/BlogPost.astro'
 import Tags from '../components/Tags.astro'
 
 const allPosts = await getCollection('blog')
-const sortedPosts = allPosts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+const sortedPosts = [...allPosts].sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
 const latestPost = sortedPosts[0]
 
-const tags = [...new Set(allPosts.map((post: any) => post.data.tags).flat())]
+const tags = [...new Set(allPosts.map((post) => post.data.tags).flat())]
 ---
 
 <BaseLayout>
@@ -28,14 +28,18 @@ const tags = [...new Set(allPosts.map((post: any) => post.data.tags).flat())]
         <Tags tags={tags} />
         <BuddhaBless />
 
-        <section class="space-y-2">
-            <h3 class="font-medium">* latest post</h3>
-            <BlogPost
-                url={`/posts/${latestPost.id}/`}
-                title={latestPost.data.title}
-                description={latestPost.data.description}
-                image={latestPost.data.image}
-            />
-        </section>
+        {
+            latestPost && (
+                <section class="space-y-2">
+                    <h3 class="font-medium">* latest post</h3>
+                    <BlogPost
+                        url={`/posts/${latestPost.id}/`}
+                        title={latestPost.data.title}
+                        description={latestPost.data.description}
+                        image={latestPost.data.image}
+                    />
+                </section>
+            )
+        }
     </div>
 </BaseLayout>
