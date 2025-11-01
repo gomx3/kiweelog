@@ -6,7 +6,7 @@ const { tags } = Astro.props
     {
         tags.map((tag: string) => (
             <a
-                href={`/tags/${tag}`}
+                href={`/tags/${tag}/`}
                 class="flex justify-center items-center px-[0.5rem] py-[0.25rem] rounded-[0.75rem] text-[0.875rem]
                     border border-stone-300 hover:bg-stone-200 transition-colors duration-300 dark:border-stone-700 dark:hover:bg-stone-700"
             >
