@@ -18,7 +18,7 @@ const { frontmatter } = Astro.props
             tags={frontmatter.tags}
         />
 
-        <hr class="border-stone-200 dark:border-stone-700" />
+        <div class="py-10 text-center text-stone-700">***</div>
 
         <div
             class="prose dark:prose-invert prose-stone max-w-none
@@ -28,12 +28,12 @@ const { frontmatter } = Astro.props
                 prose-pre:rounded-[0.875rem]
                 prose-code:before:content-none
                 prose-code:after:content-none
-                prose-img:rounded-[0.875rem]"
+                prose-img:rounded-[0.875rem] prose-img:mx-auto"
         >
             <slot />
         </div>
 
-        <hr class="border-stone-200 dark:border-stone-700" />
+        <div class="py-10 text-center text-stone-700">***</div>
 
         <Giscus
             client:visible
